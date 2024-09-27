@@ -1,63 +1,60 @@
-# Robot Arm Kinematics Simulation
+## Explanation of the Code
 
-## Overview
+This code implements a simulation of a robotic arm using kinematic principles. The robotic arm consists of three segments (links) and is capable of reaching a specified position in 3D space. Below is a breakdown of the core components and their functionalities:
 
-This project simulates the kinematics of a robotic arm in a 3D space, allowing for visualization of the arm's movement towards a designated product position while avoiding collisions with obstacles.
+### Class: `robot_arm`
 
-## Features
+The `robot_arm` class encapsulates all the functionality related to the robotic arm. It includes the following key attributes and methods:
 
-- **Direct Kinematics**: Computes the end-effector position based on joint angles.
-- **Inverse Kinematics**: Calculates joint angles required to reach a specified position.
-- **Path Planning**: Generates a path for the robot arm to follow from a start position to an end position.
-- **Collision Checking**: Detects potential collisions with obstacles during movement.
-- **Visualization**: Plots the robot arm's trajectory and visualizes the joint angles over time.
+#### Attributes
 
-## Requirements
+- **Arm Lengths**:
+  - `l1`, `l2`, `l3`: These represent the lengths of the three segments of the arm. They are critical for calculating the arm's reach and positioning.
 
-Make sure to have the following libraries installed:
+- **Center and Radius**:
+  - `center`: Coordinates of the center of an obstacle in the environment.
+  - `ro`: Radius of the obstacle, used for collision detection.
 
-- `numpy`
-- `matplotlib`
-- `scipy`
+- **Height and Angle Limits**:
+  - `height`: The height of the obstacle.
+  - `lim_min`, `lim_max`: The minimum and maximum allowable angles for each joint of the arm, which restrict the arm's movement.
 
-You can install the required libraries using:
+#### Methods
 
-```bash
-pip install numpy matplotlib scipy
-## Code Explanation
-Key Classes and Methods
-robot_arm: The main class representing the robotic arm.
-Attributes:
-l1, l2, l3: Lengths of the arm segments.
-center, ro, height: Parameters for obstacle avoidance.
-lim_min, lim_max: Joint angle limits.
-## Methods:
-init(): Initialization method.
-gen_rand_conf(): Generates random joint configurations within limits.
-direct_kinematics(q): Calculates the end-effector position given joint angles q.
-inverse_kinematics(position): Determines joint angles to achieve a specified position.
-get_indix_of_min_distance_point(Q_free, point): Finds the index of the closest point in the configuration space.
-find_path(X_free, start, end): Computes a path from start to end within valid configurations.
-collision_checker(x, circle_nb): Checks for potential collisions.
-insert_points(path, n_new_points): Interpolates between points in a path.
-get_path_angles(path): Calculates joint angles along a specified path.
-calculate_angles(path): Computes angles related to the Z-axis.
-## Main Functionality
-The main execution involves:
+- **Initialization**:
+  - `init()`: A placeholder for any initialization needed.
 
-Creating an instance of the robot_arm class.
-Generating a point cloud in configuration space (Q_free) and workspace (X_free).
-Using the start and end points to find a collision-free path.
-Visualizing the path, angles, and robot movement.
-## Visualization
-The simulation generates several plots:
+- **Random Configuration Generation**:
+  - `gen_rand_conf()`: Generates random angles for each joint within the defined limits, simulating possible configurations of the robotic arm.
 
-The 3D trajectory of the robot arm.
-A plot showing joint angles relative to time.
-A 3D scatter plot of joint angles throughout the movement.
-An animated visualization of the robot arm moving along the calculated path.
-Contributing
-Feel free to fork the repository and submit pull requests for improvements or additional features!
+- **Kinematics**:
+  - `direct_kinematics(q)`: Calculates the (x, y, z) position of the end-effector based on joint angles `q`.
+  - `inverse_kinematics(position)`: Computes the necessary joint angles to achieve a specified position in 3D space.
 
-## License
-This project is open-source and available for modification and distribution.
+- **Path Planning**:
+  - `get_indix_of_min_distance_point(Q_free, point)`: Finds the nearest valid configuration to a given point.
+  - `find_path(X_free, start, end)`: Determines a collision-free path from the start position to the end position by searching through valid configurations.
+
+- **Collision Detection**:
+  - `collision_checker(x, circle_nb)`: Checks whether a given position is in collision with obstacles in the environment.
+
+- **Path Refinement**:
+  - `insert_points(path, n_new_points)`: Interpolates additional points between existing points in the path to create a smoother trajectory.
+  - `get_path_angles(path)`: Computes the joint angles for each point along a given path.
+
+### Visualization
+
+The simulation includes several visualizations to illustrate the robot's movement:
+
+1. **3D Trajectory Plot**: Displays the path the robotic arm takes in 3D space, showing the start and end points.
+2. **Joint Angles Over Time**: A 2D plot that shows how the joint angles change as the robotic arm moves along the path.
+3. **3D Scatter Plot of Joint Angles**: Visualizes the angles of the joints as a function of time, providing insights into the arm's motion dynamics.
+4. **Animated Visualization**: An animation that illustrates the robot arm moving along the calculated path in real-time.
+
+### Usage
+
+To run the simulation, create an instance of the `robot_arm` class and call the `Q_X_free()` method with the desired parameters. This will initiate the path planning and visualization process.
+
+```python
+abbas = robot_arm()
+abbas.Q_X_free(1)
